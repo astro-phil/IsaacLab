@@ -8,3 +8,6 @@
 from .articulation import Articulation
 from .articulation_cfg import ArticulationCfg
 from .articulation_data import ArticulationData
+from .fixedwing import FixedWing
+from .fixedwing_cfg import FixedWingCfg, FloaterCfg, EngineCfg
+from .fixedwing_data import FixedWingData
