@@ -64,28 +64,28 @@ class RslRlMLPModelCfg:
         class_name: str = "HeteroscedasticGaussianDistribution"
         """The distribution class name. Default is HeteroscedasticGaussianDistribution."""
 
-    stochastic: bool = MISSING
+    # stochastic: bool = MISSING
     """Whether the model output is stochastic.
 
     For rsl-rl >= 5.0.0, this configuration is is deprecated. Please use `distribution_cfg` instead and set it to None
     for deterministic output or to a valid configuration class, e.g., `GaussianDistributionCfg` for stochastic output.
     """
 
-    init_noise_std: float = MISSING
+    # init_noise_std: float = MISSING
     """The initial noise standard deviation for the model.
 
     For rsl-rl >= 5.0.0, this configuration is is deprecated. Please use `distribution_cfg` instead and use the
     `init_std` field of the distribution configuration to specify the initial noise standard deviation.
     """
 
-    noise_std_type: Literal["scalar", "log"] = "scalar"
+    # noise_std_type: Literal["scalar", "log"] = "scalar"
     """The type of noise standard deviation for the model. Defaults to scalar.
 
     For rsl-rl >= 5.0.0, this configuration is is deprecated. Please use `distribution_cfg` instead and use the
     `std_type` field of the distribution configuration to specify the type of noise standard deviation.
     """
 
-    state_dependent_std: bool = False
+    # state_dependent_std: bool = False
     """Whether to use state-dependent standard deviation for the policy. Defaults to False.
 
     For rsl-rl >= 5.0.0, this configuration is is deprecated. Please use `distribution_cfg` instead and use
