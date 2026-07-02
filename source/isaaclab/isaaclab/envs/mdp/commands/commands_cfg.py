@@ -273,13 +273,6 @@ class UniformAirspeedHeadingCommandCfg(CommandTermCfg):
     asset_name: str = MISSING
     """Name of the asset in the environment for which the commands are generated."""
 
-    alt_command: bool = False
-    """Whether to use heading command or angular velocity command. Defaults to False.
-
-    If True, the angular velocity command is computed from the heading error, where the
-    target heading is sampled uniformly from provided range. Otherwise, the angular velocity
-    command is sampled uniformly from provided range.
-    """
 
     @configclass
     class Ranges:
@@ -291,10 +284,7 @@ class UniformAirspeedHeadingCommandCfg(CommandTermCfg):
         heading: tuple[float, float] = MISSING
         """Range for the heading command (in rad)."""
 
-        vertical_speed: tuple[float, float] = MISSING
-        """Range for the linear-z velocity command (in m/s)."""
-
-        altitude: tuple[float, float] | None = None
+        altitude: tuple[float, float] = MISSING
         """Range for the altitude command (in m)."""
 
     ranges: Ranges = MISSING

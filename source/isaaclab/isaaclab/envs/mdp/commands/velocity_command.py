@@ -394,18 +394,6 @@ class UniformAirspeedHeadingCommand(CommandTerm):
         # initialize the base class
         super().__init__(cfg, env)
 
-        # check configuration
-        if self.cfg.alt_command and self.cfg.ranges.altitude is None:
-            raise ValueError(
-                "The velocity command has heading commands active (heading_command=True) but the `ranges.heading`"
-                " parameter is set to None."
-            )
-        if self.cfg.ranges.altitude and not self.cfg.alt_command:
-            omni.log.warn(
-                f"The velocity command has the 'ranges.altitude' attribute set to '{self.cfg.ranges.altitude}'"
-                " but the altitude command is not active. Consider setting the flag for the altitude command to True."
-            )
-
         # obtain the robot asset
         # -- robot
         self.robot: Articulation = env.scene[cfg.asset_name]
@@ -456,14 +444,10 @@ class UniformAirspeedHeadingCommand(CommandTerm):
                 + 1e-6,
             )
         ) / max_command_step
-        if self.cfg.alt_command:
-            self.metrics["error_vertical"] += (
-                self.ahv_command[:, 2] - self.robot.data.body_pos_w[:, 0, 2]
-            ) / max_command_step
-        else:
-            self.metrics["error_vertical"] += (
-                self.ahv_command[:, 2] - self.robot.data.root_lin_vel_w[:, 2]
-            ) / max_command_step
+
+        self.metrics["error_vertical"] += (
+            self.ahv_command[:, 2] - self.robot.data.body_pos_w[:, 0, 2]
+        ) / max_command_step
 
     def _resample_command(self, env_ids: Sequence[int]):
         # sample velocity commands
@@ -473,10 +457,8 @@ class UniformAirspeedHeadingCommand(CommandTerm):
         # -- linear velocity - y direction
         self.ahv_command[env_ids, 1] = r.uniform_(*self.cfg.ranges.heading)
         # -- ang vel yaw - rotation around z
-        if self.cfg.alt_command:
-            self.ahv_command[env_ids, 2] = r.uniform_(*self.cfg.ranges.altitude)
-        else:
-            self.ahv_command[env_ids, 2] = r.uniform_(*self.cfg.ranges.vertical_speed)
+        self.ahv_command[env_ids, 2] = r.uniform_(*self.cfg.ranges.altitude)
+
 
     def _update_command(self):
         """Post-processes the velocity command."""
