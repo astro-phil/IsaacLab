@@ -57,6 +57,7 @@ class RslRlMLPModelCfg:
         std_type: Literal["scalar", "log"] = "scalar"
         """The parameterization type of the output distribution's standard deviation. Default is scalar."""
 
+
     @configclass
     class HeteroscedasticGaussianDistributionCfg(GaussianDistributionCfg):
         """Configuration for the heteroscedastic Gaussian output distribution."""
@@ -339,7 +340,7 @@ class RslRlOnPolicyRunnerCfg(RslRlBaseRunnerCfg):
     algorithm: RslRlPpoAlgorithmCfg = MISSING
     """The algorithm configuration."""
 
-    policy: RslRlPpoActorCriticCfg = MISSING
+    # policy: RslRlPpoActorCriticCfg = MISSING
     """The policy configuration.
 
     For rsl-rl >= 4.0.0, this configuration is is deprecated. Please use `actor` and `critic` model configurations
